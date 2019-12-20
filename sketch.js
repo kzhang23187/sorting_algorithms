@@ -1,7 +1,7 @@
 let values = [];
 let states = [];
 let w = 5;
-let wait = 20;
+let wait = 10;
 
 function setup() {
   createCanvas(windowWidth, windowHeight - 50);
@@ -15,31 +15,51 @@ function quickSortButton() {
   quickSort(values, 0, values.length - 1);
 }
 function mergeSortButton() {
-  mergeSort(values);
+  mergeSort(values, 0, values.length - 1);
 }
-
-
-
-
 
 //MERGE SORT
 async function mergeSort(arr, start, end) {
   if (start >= end) {
     return;
   }
-  let mid = (start + end) / 2;
-  mergeSort(arr, start, mid);
-  mergeSort(arr, mid, end);
-  merge(arr, start, mid, end);
+  let mid =  Math.floor((start + end) / 2);
+  await mergeSort(arr, start, mid);
+  await mergeSort(arr, mid + 1, end);
+  await merge(arr, start, mid, end);
 }
 
 async function merge(arr, start, mid, end) {
+  await sleep(wait);
   let start2 = mid + 1;
-  if (arr[start] <= arr[start2]) {
-    start++;
-  } else {
+  if (arr[mid] <= arr[start2]) {
+    return;
+  } 
+  while (start <= mid && start2 <= end) {
+    if (arr[start] <= arr[start2]) {
 
+      states[start] = -1;
+      start++;
+      states[start] = 0;
+    } else {
+      let value = arr[start2];
+      let index = start2;
+      //shift all elements between element 1,
+      //element2, right by 1
+      while (index > start) {
+        await sleep(0.05);
+        arr[index] = arr[index - 1];
+        index-=1;
+      }
+      arr[start] = value;
+      states[start] = -1;
+      start++;
+      mid++;
+      start2++;
+      states[start] = 0;
+    }
   }
+  states[start] = -1;
 }
 
 
@@ -47,9 +67,9 @@ async function merge(arr, start, mid, end) {
 
 //QUICK SORT
 async function quickSort(arr, start, end) {
-  for (let i = start; i < end; i++) {
-    states[i] = 1;
-  }
+  // for (let i = start; i < end; i++) {
+  //   states[i] = 1;
+  // }
   if (start >= end) {
     return;
   }
@@ -115,7 +135,7 @@ function draw() {
       fill(255, 0, 0);
     } else if (states[i] == 1) {
       fill('#E12345');
-    }else {
+    } else {
        fill(255);
     }
     rect(i*w, height - values[i], w, values[i]);
