@@ -1,12 +1,15 @@
 let values = [];
 let states = [];
 let w = 5;
-let wait = 10;
+let wait = w/100;
+
+
 
 function setup() {
-  createCanvas(windowWidth, windowHeight - 50);
+  createCanvas(windowWidth, windowHeight - 120);
   values = new Array(floor(width/w));
   scramble();
+  
 }
 function scramble() {
   for (let i = 0; i < values.length; i++) {
@@ -21,51 +24,104 @@ function shuffles(array) {
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
-
 async function sorted() {
   for (let i = 0; i < states.length; i++) {
     await sleep(1);
     states[i] = 1;
   }
 }
-async function quickSortButton() {
+
+function changeBarSize() {
+  w = Number(document.getElementById("Barsize").value);
+  wait = w/1000;
+  values = new Array(floor(width/w));
+  scramble();
+}
+async function disableButtons() {
   document.getElementById("Scramble").disabled = true;
   document.getElementById("Quicksort").disabled = true;
   document.getElementById("Mergesort").disabled = true;
   document.getElementById("Heapsort").disabled = true;
-  await quickSort(values, 0, values.length - 1);
-  sorted();
+  document.getElementById("Insertionsort").disabled = true;
+  document.getElementById("Bubblesort").disabled = true;
+  document.getElementById("Barbutton").disabled = true;
+}
+async function enableButtons() {
   document.getElementById("Scramble").disabled = false;
   document.getElementById("Quicksort").disabled = false;
   document.getElementById("Mergesort").disabled = false;
   document.getElementById("Heapsort").disabled = false;
+  document.getElementById("Insertionsort").disabled = false;
+  document.getElementById("Bubblesort").disabled = false;
+  document.getElementById("Barbutton").disabled = false;
+
+}
+
+async function quickSortButton() {
+  disableButtons();
+  await quickSort(values, 0, values.length - 1);
+  await sorted();
+  enableButtons();
 }
 
 async function mergeSortButton() {
-  document.getElementById("Scramble").disabled = true;
-  document.getElementById("Quicksort").disabled = true;
-  document.getElementById("Mergesort").disabled = true;
-  document.getElementById("Heapsort").disabled = true;
+  disableButtons();
   await mergeSort(values, 0, values.length - 1);
-  sorted();
-  document.getElementById("Scramble").disabled = false;
-  document.getElementById("Quicksort").disabled = false;
-  document.getElementById("Mergesort").disabled = false;
-  document.getElementById("Heapsort").disabled = false;
+  await sorted();
+  enableButtons();
 }
 
 async function heapSortButton() {
-  document.getElementById("Scramble").disabled = true;
-  document.getElementById("Quicksort").disabled = true;
-  document.getElementById("Mergesort").disabled = true;
-  document.getElementById("Heapsort").disabled = true;
+  disableButtons();
   await heapSort(values, values.length);
-  sorted();
-  document.getElementById("Scramble").disabled = false;
-  document.getElementById("Quicksort").disabled = false;
-  document.getElementById("Mergesort").disabled = false;
-  document.getElementById("Heapsort").disabled = false;
+  await sorted();
+  enableButtons();
 }
+
+async function insertionSortButton() {
+  disableButtons();
+  await insertionSort(values);
+  await sorted();
+  enableButtons();
+}
+
+async function bubbleSortButton() {
+  disableButtons();
+  await bubbleSort(values);
+  await sorted();
+  enableButtons();
+}
+
+//INSERTION SORT
+async function insertionSort(arr) {
+  for (let i = 1; i < arr.length; i++) {
+    let k = arr[i];
+    let j = i - 1;
+    while (j >= 0 && arr[j] > k) {
+      states[j+1] = 0;
+      await swap(arr, j, j+1);
+      states[j+1] = -1;
+      j--;
+    }
+    states[j] = -1;
+    arr[j+1] = k;
+  }
+}
+
+//BUBBLE SORT
+async function bubbleSort(arr) {
+  n = arr.length;
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n-i-1; j++) {
+      if (arr[j] > arr[j+1]) {
+        await swap(arr, j, j+1);
+      }
+    }
+  }
+}
+
+
+
 //HEAP SORT
 async function heapifyDown(arr, idx, end) {
   let largest = idx;
@@ -94,12 +150,6 @@ async function heapSort(arr, n) {
   }
 }
 
-
-
-
-
-
-
 //MERGE SORT
 async function mergeSort(arr, start, end) {
   if (start >= end) {
@@ -107,9 +157,8 @@ async function mergeSort(arr, start, end) {
   }
   let mid =  Math.floor((start + end) / 2);
   await Promise.all([
-    mergeSort(arr, start, mid),
-    mergeSort(arr, mid + 1, end)
-  ]);
+  mergeSort(arr, start, mid),
+  mergeSort(arr, mid + 1, end)]);
   await merge(arr, start, mid, end);
   return;
 }
@@ -148,9 +197,6 @@ async function merge(arr, start, mid, end) {
   }
   states[start] = -1;
 }
-
-
-
 
 //QUICK SORT
 async function quickSort(arr, start, end) {

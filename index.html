@@ -1,4 +1,15 @@
 <!DOCTYPE html>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <html lang="">
   <head>
     <meta charset="utf-8">
@@ -10,9 +21,35 @@
     <script src="sketch.js"></script>
   </head>
   <body>
-      <button id = "Scramble", onclick="scramble()">Scramble</button>
-      <button id = "Quicksort", onclick="quickSortButton()">Quick Sort</button>
-      <button id = "Mergesort", onclick="mergeSortButton()">Merge Sort</button>
-      <button id = "Heapsort", onclick="heapSortButton()">Heap Sort</button>
+    <div>
+        <button id = "Scramble", class="btn btn-primary", onclick="scramble()">Scramble</button>
+        <button id = "Quicksort", class="btn btn-primary", onclick="quickSortButton()">Quick Sort</button>
+        <button id = "Mergesort", class="btn btn-primary", onclick="mergeSortButton()">Merge Sort</button>
+        <button id = "Heapsort", class="btn btn-primary", onclick="heapSortButton()">Heap Sort</button>
+        <button id = "Insertionsort", class="btn btn-primary", onclick="insertionSortButton()">Insertion Sort</button>
+        <button id = "Bubblesort", class="btn btn-primary", onclick="bubbleSortButton()">Bubble Sort</button>
+    </div>
+    <div>
+      <br/>
+    </div>
+    <div>
+        <input id = "Barsize", type="number">
+        <button id = "Barbutton", class="btn btn-primary", onclick="changeBarSize()">Change Barsize</button>
+    </div>
+      
+    <script> 
+        var input = document.getElementById("Barsize");
+      
+        // Execute a function when the user releases a key on the keyboard
+        input.addEventListener("keyup", function(event) {
+          // Number 13 is the "Enter" key on the keyboard
+          if (event.keyCode === 13) {
+            // Cancel the default action, if needed
+            event.preventDefault();
+            // Trigger the button element with a click
+            document.getElementById("Barbutton").click();
+          }
+        });
+      </script>
   </body>
 </html>
