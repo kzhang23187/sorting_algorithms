@@ -5,12 +5,70 @@ let wait = w/100;
 
 
 
+// let width = 500;
+// let height = 500;
+// let img;
+// function preload() {
+//   img = loadImage('panda.jpg');
+// }
+// function setup() {  
+//   frameRate(30);
+//   createCanvas(width, height);
+
+//   image(img, 0, 0, width, height);
+//   loadPixels();
+//   // let d = pixelDensity();
+//   // let halfImage = (width * d) * (height * d);
+//   // loadPixels();
+//   // for (let i = 0; i < halfImage; i++) {
+//   //   pixels[i] = color('#0f0');
+//   // }
+//   shuffles(pixels);
+//   values = pixels;
+//   updatePixels();
+// } 
+
+
+// function draw() { 
+  
+//   // image(img, 0, 0);
+//   // image(img, 0, height / 2, img.width / 2, img.height / 2);
+// }
+
+
+
+
+
+
 function setup() {
-  createCanvas(windowWidth, windowHeight - 120);
+  createCanvas(windowWidth-10, windowHeight - 80);
   values = new Array(floor(width/w));
   scramble();
   
 }
+function draw() {
+  background(51);
+
+  // for ( let i = values.length - 1; i >= 0; i--) {
+  //     stroke(0);
+  //     fill(255);
+  //     rect((values.length - i)*w, height - values[i], w, values[i]);
+  // }
+  for ( let i = 0; i < values.length; i++) {
+    //stroke(0);
+    noStroke();
+    if (states[i] == 1) {
+      fill(0, 255, 0);
+    } else if (states[i] == 0) {
+      fill('#E12345');
+    } else {
+       fill(255);
+    }
+    rect(i*w, height - values[i], w, values[i]);
+}
+  
+}
+
 function scramble() {
   for (let i = 0; i < values.length; i++) {
     values[i] = i*w*height/width;
@@ -32,27 +90,29 @@ async function sorted() {
 }
 
 function changeBarSize() {
-  w = Number(document.getElementById("Barsize").value);
+  w = Number(document.getElementById("Barsize").value) + 1;
   wait = w/1000;
   values = new Array(floor(width/w));
   scramble();
 }
 async function disableButtons() {
   document.getElementById("Scramble").disabled = true;
-  document.getElementById("Quicksort").disabled = true;
-  document.getElementById("Mergesort").disabled = true;
-  document.getElementById("Heapsort").disabled = true;
-  document.getElementById("Insertionsort").disabled = true;
-  document.getElementById("Bubblesort").disabled = true;
+  // document.getElementById("Quicksort").disabled = true;
+  // document.getElementById("Mergesort").disabled = true;
+  // document.getElementById("Heapsort").disabled = true;
+  // document.getElementById("Insertionsort").disabled = true;
+  // document.getElementById("Bubblesort").disabled = true;
+  document.getElementById("dropdown").disabled = true;
   document.getElementById("Barbutton").disabled = true;
 }
 async function enableButtons() {
   document.getElementById("Scramble").disabled = false;
-  document.getElementById("Quicksort").disabled = false;
-  document.getElementById("Mergesort").disabled = false;
-  document.getElementById("Heapsort").disabled = false;
-  document.getElementById("Insertionsort").disabled = false;
-  document.getElementById("Bubblesort").disabled = false;
+  // document.getElementById("Quicksort").disabled = false;
+  // document.getElementById("Mergesort").disabled = false;
+  // document.getElementById("Heapsort").disabled = false;
+  // document.getElementById("Insertionsort").disabled = false;
+  // document.getElementById("Bubblesort").disabled = false;
+  document.getElementById("dropdown").disabled = false;
   document.getElementById("Barbutton").disabled = false;
 
 }
@@ -257,25 +317,3 @@ function sleep(ms) {
 
 
 
-function draw() {
-  background(51);
-
-  // for ( let i = values.length - 1; i >= 0; i--) {
-  //     stroke(0);
-  //     fill(255);
-  //     rect((values.length - i)*w, height - values[i], w, values[i]);
-  // }
-  for ( let i = 0; i < values.length; i++) {
-    //stroke(0);
-    noStroke();
-    if (states[i] == 1) {
-      fill(0, 255, 0);
-    } else if (states[i] == 0) {
-      fill('#E12345');
-    } else {
-       fill(255);
-    }
-    rect(i*w, height - values[i], w, values[i]);
-}
-  
-}

@@ -21,34 +21,71 @@
     <script src="sketch.js"></script>
   </head>
   <body>
-    <div>
-        <button id = "Scramble", class="btn btn-primary", onclick="scramble()">Scramble</button>
-        <button id = "Quicksort", class="btn btn-primary", onclick="quickSortButton()">Quick Sort</button>
-        <button id = "Mergesort", class="btn btn-primary", onclick="mergeSortButton()">Merge Sort</button>
-        <button id = "Heapsort", class="btn btn-primary", onclick="heapSortButton()">Heap Sort</button>
-        <button id = "Insertionsort", class="btn btn-primary", onclick="insertionSortButton()">Insertion Sort</button>
-        <button id = "Bubblesort", class="btn btn-primary", onclick="bubbleSortButton()">Bubble Sort</button>
-    </div>
-    <div>
-      <br/>
-    </div>
-    <div>
-        <input id = "Barsize", type="number">
-        <button id = "Barbutton", class="btn btn-primary", onclick="changeBarSize()">Change Barsize</button>
-    </div>
+    <div class="container-fluid">
+          <div class="row"> 
+            <div class="col-sm">
+                <div class="btn-group">
+                  <div class="dropdown">
+                    <button id = "dropdown" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                      Sorting Algorithm
+                    </button>
+                    <div class="dropdown-menu">
+                      <li><a id="Quicksort" class="dropdown-item" href="#">Quicksort</a></li>
+                      <li><a id="Mergesort" class="dropdown-item" href="#">Mergesort</a></li>
+                      <li><a id="Heapsort" class="dropdown-item" href="#">Heapsort</a></li>
+                      <li><a id="Insertionsort" class="dropdown-item" href="#">Insertionsort</a></li>
+                      <li><a id="Bubblesort" class="dropdown-item" href="#">Bubblesort</a></li>
+                    </div>
+                  </div>
+                  <button id = "Scramble", class="btn btn-primary", onclick="scramble()">Scramble</button>
+                </div> 
+              <!-- </div>
+              <div class = "col-sm-6"> -->
+                  <input id = "Barsize", type="number">
+                  <button id = "Barbutton", class="btn btn-primary", onclick="changeBarSize()">Change Barsize</button>
+                  <!-- <div class="form-group">
+                      <label for="usr">Change Barsize:</label>
+                      <input type="range" class="form-control-range" id="Barsize">
+                    </div> -->
+              </div>
+          </div>
+
+    </div> 
+        <script>
+          $('#Quicksort').click(function(e) {
+          quickSortButton();
+          e.preventDefault();// prevent the default anchor functionality
+          });
+          $('#Mergesort').click(function(e) {
+          mergeSortButton();
+          e.preventDefault();// prevent the default anchor functionality
+          });
+          $('#Heapsort').click(function(e) {
+          heapSortButton();
+          e.preventDefault();// prevent the default anchor functionality
+          });
+          $('#Insertionsort').click(function(e) {
+          insertionSortButton();
+          e.preventDefault();// prevent the default anchor functionality
+          });
+          $('#Bubblesort').click(function(e) {
+          bubbleSortButton();
+          e.preventDefault();// prevent the default anchor functionality
+          });
+        </script>
       
     <script> 
         var input = document.getElementById("Barsize");
-      
+
         // Execute a function when the user releases a key on the keyboard
         input.addEventListener("keyup", function(event) {
-          // Number 13 is the "Enter" key on the keyboard
-          if (event.keyCode === 13) {
             // Cancel the default action, if needed
-            event.preventDefault();
-            // Trigger the button element with a click
-            document.getElementById("Barbutton").click();
-          }
+            if (event.keyCode == 13) {
+              event.preventDefault();
+                // Trigger the button element with a click
+                document.getElementById("Barbutton").click();
+            }
+            
         });
       </script>
   </body>
